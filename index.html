@@ -176,7 +176,6 @@
     .pay-btn:hover {
       background: #16796f;
     }
-    /* Modal PayPal button styling */
     .paypal-modal {
       display: none;
       margin-top: 20px;
@@ -198,6 +197,29 @@
     .contact-btn:hover {
       background: #2dd07c;
       color: #fff;
+    }
+    /* Make sure chatbot input is always visible and usable */
+    .n8n-chat__input,
+    .n8n-chat__input input,
+    .n8n-chat__input textarea {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      background: #fff !important;
+      color: #222 !important;
+      z-index: 9999 !important;
+    }
+    .n8n-chat__input input,
+    .n8n-chat__input textarea {
+      border: 1.5px solid #16796f !important;
+      font-size: 1em !important;
+      border-radius: 7px !important;
+      padding: 10px !important;
+    }
+    .n8n-chat__input input:disabled,
+    .n8n-chat__input textarea:disabled {
+      background: #f7f7f7 !important;
+      color: #aaa !important;
+      pointer-events: auto !important;
     }
     @media (max-width: 700px) {
       .container { padding: 20px 5px; }
@@ -483,8 +505,6 @@ animate();
           inputPlaceholder: "Type your question here...",
         },
       }
-      // You can add systemPrompt here if your widget/AI backend supports it. 
-      // For OpenAI or n8n with system prompts, use the prompt provided earlier for 'Nathan'.
     });
   })();
 </script>
