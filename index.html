@@ -4,226 +4,359 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>WhatsApp AI Chatbot</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #00A884;
+      --primary-dark: #008069;
+      --primary-light: #E7F8F2;
+      --secondary: #111B21;
+      --text: #2D3748;
+      --text-light: #4A5568;
+      --background: #F5F7FA;
+      --card: #FFFFFF;
+      --border: #E2E8F0;
+      --success: #38A169;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+    }
+    
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
-      font-family: 'Roboto', sans-serif;
-      background: #1c313a;
-      color: #fff;
+      font-family: 'Inter', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.5;
     }
+    
     #bg-canvas {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
+      top: 0; 
+      left: 0;
+      width: 100vw; 
+      height: 100vh;
       z-index: -1;
       display: block;
+      opacity: 0.6;
     }
+    
     .container {
-      max-width: 950px;
-      margin: 36px auto;
-      background: rgba(255,255,255,0.93);
-      padding: 46px 36px 34px 36px;
-      border-radius: 16px;
-      box-shadow: 0 4px 32px rgba(30,50,70,0.12);
-      color: #11344d;
+      max-width: 1000px;
+      margin: 40px auto;
+      background: var(--card);
+      padding: 0;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
       position: relative;
       z-index: 1;
     }
+    
     header {
-      background: linear-gradient(90deg, #16796f 0%, #2dd07c 100%);
-      color: #fff;
-      padding: 48px 0 32px 0;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 60px 0 40px 0;
       text-align: center;
       position: relative;
-      border-radius: 16px 16px 0 0;
-      box-shadow: 0 2px 12px rgba(44,180,170,0.09);
     }
+    
     .logo-wrap {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 18px;
+      margin-bottom: 24px;
     }
+    
     .logo {
-      width: 74px;
-      height: 74px;
-      background: #fff;
+      width: 80px;
+      height: 80px;
+      background: white;
       border-radius: 50%;
-      box-shadow: 0 2px 16px rgba(30,80,100,0.12);
+      box-shadow: var(--shadow-md);
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.3s ease;
     }
+    
+    .logo:hover {
+      transform: scale(1.05);
+    }
+    
     .logo svg {
-      width: 54px;
-      height: 54px;
+      width: 50px;
+      height: 50px;
       display: block;
     }
+    
     header h1 {
-      margin: 0 0 8px 0;
-      font-size: 2.6rem;
-      letter-spacing: 1.5px;
+      margin: 0 0 12px 0;
+      font-size: 2.8rem;
       font-weight: 700;
+      letter-spacing: -0.5px;
     }
+    
     header p {
-      font-size: 1.21rem;
-      margin-top: 0;
-      color: #eafff5;
+      font-size: 1.25rem;
+      margin: 0 auto;
+      max-width: 600px;
+      color: rgba(255, 255, 255, 0.9);
       font-weight: 400;
+      line-height: 1.6;
     }
+    
+    .content {
+      padding: 40px 50px;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      color: var(--secondary);
+      margin-bottom: 30px;
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h2:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    
     section {
-      margin-bottom: 48px;
+      margin-bottom: 60px;
     }
+    
     .features {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 22px;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
     }
+    
     .feature {
-      flex: 1 1 230px;
-      background: #f0f8f4;
-      border-radius: 10px;
-      padding: 24px 18px;
-      min-width: 220px;
-      margin-bottom: 20px;
-      box-shadow: 0 1px 8px rgba(44,180,170,0.04);
-      transition: box-shadow 0.18s;
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 30px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
     }
+    
     .feature:hover {
-      box-shadow: 0 4px 16px rgba(44,180,170,0.11);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-light);
     }
+    
     .feature h3 {
       margin-top: 0;
-      color: #16796f;
+      color: var(--primary-dark);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 16px;
     }
+    
+    .feature p {
+      color: var(--text-light);
+      margin: 0;
+    }
+    
     .pricing-table {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
-      flex-wrap: wrap;
-      justify-content: center;
     }
+    
     .plan {
-      background: #f7f8fa;
-      border: 2.5px solid #2dd07c;
-      border-radius: 12px;
-      flex: 1 1 260px;
-      margin-bottom: 22px;
-      padding: 28px 20px;
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(30,70,70,0.07);
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 30px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
     }
+    
+    .plan:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+    
     .plan h4 {
       margin: 0 0 8px 0;
-      color: #16796f;
-      font-size: 1.21rem;
+      color: var(--primary-dark);
+      font-size: 1.3rem;
+      font-weight: 600;
     }
+    
     .plan .price {
-      font-size: 2.1rem;
+      font-size: 2.4rem;
       margin: 10px 0 20px 0;
-      color: #11344d;
+      color: var(--secondary);
       font-weight: 700;
     }
+    
+    .plan .price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-light);
+    }
+    
     .plan ul {
       list-style: none;
       padding: 0;
-      color: #555;
+      color: var(--text-light);
       font-size: 1rem;
-      margin-bottom: 18px;
-      text-align: left;
-      margin-left: 12px;
+      margin-bottom: 24px;
+      flex-grow: 1;
     }
+    
     .plan ul li {
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       position: relative;
-      padding-left: 20px;
+      padding-left: 28px;
+      line-height: 1.5;
     }
+    
     .plan ul li:before {
       content: "✓";
-      color: #2dd07c;
+      color: var(--success);
       position: absolute;
       left: 0;
       font-size: 1.1em;
       top: 0;
+      font-weight: bold;
     }
+    
     .pay-buttons {
       display: flex;
-      gap: 16px;
+      gap: 12px;
       justify-content: center;
-      margin: 14px 0 0 0;
+      margin-top: auto;
     }
+    
     .pay-btn {
-      background: #2dd07c;
-      color: #fff;
-      border-radius: 6px;
-      padding: 12px 18px;
+      background: var(--primary);
+      color: white;
+      border-radius: var(--radius-sm);
+      padding: 12px 20px;
       font-size: 1rem;
-      font-weight: 500;
+      font-weight: 600;
       border: none;
       text-decoration: none;
-      transition: background .16s;
-      display: inline-block;
-      margin-right: 0;
-      box-shadow: 0 1px 6px rgba(44,180,170,0.08);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
+      width: 100%;
     }
+    
     .pay-btn:hover {
-      background: #16796f;
+      background: var(--primary-dark);
+      transform: translateY(-2px);
     }
+    
     .paypal-modal {
       display: none;
       margin-top: 20px;
       text-align: center;
+      padding: 20px;
+      background: var(--primary-light);
+      border-radius: var(--radius-sm);
     }
+    
     .contact-btn {
-      display: inline-block;
-      background: #16796f;
-      color: #fff;
-      padding: 16px 36px;
-      border-radius: 8px;
-      font-size: 1.13rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary);
+      color: white;
+      padding: 16px 32px;
+      border-radius: var(--radius-sm);
+      font-size: 1.1rem;
       font-weight: 600;
       text-decoration: none;
-      box-shadow: 0 2px 10px rgba(44,180,170,0.11);
-      margin: 16px 0;
-      transition: background 0.18s;
+      transition: all 0.2s ease;
+      margin: 20px 0;
+      box-shadow: var(--shadow-sm);
     }
+    
     .contact-btn:hover {
-      background: #2dd07c;
-      color: #fff;
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
-    /* Make sure chatbot input is always visible and usable */
+    
+    .contact-section {
+      text-align: center;
+      padding: 40px 20px;
+      background: var(--primary-light);
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    }
+    
+    footer {
+      text-align: center;
+      color: var(--text-light);
+      margin: 40px 0;
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .content {
+        padding: 30px 20px;
+      }
+      
+      header h1 {
+        font-size: 2.2rem;
+      }
+      
+      header p {
+        font-size: 1.1rem;
+      }
+      
+      .features, .pricing-table {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Chatbot overrides */
     .n8n-chat__input,
     .n8n-chat__input input,
     .n8n-chat__input textarea {
       opacity: 1 !important;
       pointer-events: auto !important;
       background: #fff !important;
-      color: #222 !important;
+      color: var(--text) !important;
       z-index: 9999 !important;
     }
+    
     .n8n-chat__input input,
     .n8n-chat__input textarea {
-      border: 1.5px solid #16796f !important;
+      border: 1.5px solid var(--primary) !important;
       font-size: 1em !important;
-      border-radius: 7px !important;
-      padding: 10px !important;
+      border-radius: var(--radius-sm) !important;
+      padding: 12px !important;
     }
+    
     .n8n-chat__input input:disabled,
     .n8n-chat__input textarea:disabled {
       background: #f7f7f7 !important;
       color: #aaa !important;
       pointer-events: auto !important;
-    }
-    @media (max-width: 700px) {
-      .container { padding: 20px 5px; }
-      .features, .pricing-table { flex-direction: column; }
     }
   </style>
 </head>
@@ -250,87 +383,94 @@
     <h1>WhatsApp AI Chatbot</h1>
     <p>Sell more. Answer faster. Delight your customers 24/7 – all on WhatsApp, powered by AI.</p>
   </header>
-  <section>
-    <h2>How It Works</h2>
-    <div class="features">
-      <div class="feature">
-        <h3>Instant Replies</h3>
-        <p>Never lose a customer again! Your bot responds instantly to every WhatsApp message, even at 2am.</p>
-      </div>
-      <div class="feature">
-        <h3>Smart Sales & Support</h3>
-        <p>AI answers FAQs, qualifies leads, schedules appointments, and can even help close sales – automatically.</p>
-      </div>
-      <div class="feature">
-        <h3>Easy Setup</h3>
-        <p>Ready in less than 24 hours. No coding needed. Just connect your number and start chatting!</p>
-      </div>
-    </div>
-  </section>
-  <section>
-    <h2>Pricing</h2>
-    <div class="pricing-table">
-      <div class="plan">
-        <h4>Starter</h4>
-        <div class="price">$20 <span style="font-size:1rem;">per month</span></div>
-        <ul>
-          <li>500 chats/month</li>
-          <li>Basic AI responses</li>
-          <li>Email/WhatsApp Support</li>
-        </ul>
-        <div class="pay-buttons">
-          <button id="show-paypal-starter" class="pay-btn" type="button">Subscribe Monthly</button>
+  
+  <div class="content">
+    <section>
+      <h2>How It Works</h2>
+      <div class="features">
+        <div class="feature">
+          <h3>Instant Replies</h3>
+          <p>Never lose a customer again! Your bot responds instantly to every WhatsApp message, even at 2am.</p>
         </div>
-        <div id="paypal-starter-modal" class="paypal-modal">
-          <div id="paypal-button-container-P-2LS65560M9674910ENBNML4I"></div>
+        <div class="feature">
+          <h3>Smart Sales & Support</h3>
+          <p>AI answers FAQs, qualifies leads, schedules appointments, and can even help close sales – automatically.</p>
+        </div>
+        <div class="feature">
+          <h3>Easy Setup</h3>
+          <p>Ready in less than 24 hours. No coding needed. Just connect your number and start chatting!</p>
         </div>
       </div>
-      <div class="plan">
-        <h4>Business</h4>
-        <div class="price">$40 <span style="font-size:1rem;">per month</span></div>
-        <ul>
-          <li>2,500 chats/month</li>
-          <li>Advanced AI (sales & support)</li>
-          <li>Custom FAQ integration</li>
-          <li>Priority support</li>
-        </ul>
-        <div class="pay-buttons">
-          <button id="show-paypal-business" class="pay-btn" type="button">Subscribe Monthly</button>
+    </section>
+    
+    <section>
+      <h2>Pricing</h2>
+      <div class="pricing-table">
+        <div class="plan">
+          <h4>Starter</h4>
+          <div class="price">$20 <span>per month</span></div>
+          <ul>
+            <li>500 chats/month</li>
+            <li>Basic AI responses</li>
+            <li>Email/WhatsApp Support</li>
+          </ul>
+          <div class="pay-buttons">
+            <button id="show-paypal-starter" class="pay-btn" type="button">Subscribe Monthly</button>
+          </div>
+          <div id="paypal-starter-modal" class="paypal-modal">
+            <div id="paypal-button-container-P-2LS65560M9674910ENBNML4I"></div>
+          </div>
         </div>
-        <div id="paypal-business-modal" class="paypal-modal">
-          <div id="paypal-button-container-P-1Y881485VY5794813NBNMRNY"></div>
+        
+        <div class="plan">
+          <h4>Business</h4>
+          <div class="price">$40 <span>per month</span></div>
+          <ul>
+            <li>2,500 chats/month</li>
+            <li>Advanced AI (sales & support)</li>
+            <li>Custom FAQ integration</li>
+            <li>Priority support</li>
+          </ul>
+          <div class="pay-buttons">
+            <button id="show-paypal-business" class="pay-btn" type="button">Subscribe Monthly</button>
+          </div>
+          <div id="paypal-business-modal" class="paypal-modal">
+            <div id="paypal-button-container-P-1Y881485VY5794813NBNMRNY"></div>
+          </div>
+        </div>
+        
+        <div class="plan">
+          <h4>Enterprise</h4>
+          <div class="price">Custom</div>
+          <ul>
+            <li>Unlimited chats</li>
+            <li>Custom AI training</li>
+            <li>Backend integration</li>
+            <li>Dedicated account manager</li>
+          </ul>
+          <div class="pay-buttons">
+            <a href="#contact" class="pay-btn">Contact Us</a>
+          </div>
         </div>
       </div>
-      <div class="plan">
-        <h4>Enterprise</h4>
-        <div class="price">Custom</div>
-        <ul>
-          <li>Unlimited chats</li>
-          <li>Custom AI training</li>
-          <li>Backend integration</li>
-          <li>Dedicated account manager</li>
-        </ul>
-        <div class="pay-buttons">
-          <a href="#contact" class="pay-btn">Contact Us</a>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section id="contact">
+    </section>
+  </div>
+  
+  <section id="contact" class="contact-section">
     <h2>Contact & Demo</h2>
-    <div style="text-align:center; margin:30px 0 10px 0;">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdbl-_UKXc-RGOJUdWy4c-UqkiIfVD54t65QU5TPT0cQLoQUA/viewform" target="_blank" class="contact-btn">
-        Open Contact & Demo Form
-      </a>
-    </div>
-    <p style="text-align:center;margin:18px 0;">
-      Or <a href="mailto:wolfnodehq@gmail.com" style="color:#16796f;text-decoration:underline;font-weight:600;">Contact us by email</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdbl-_UKXc-RGOJUdWy4c-UqkiIfVD54t65QU5TPT0cQLoQUA/viewform" target="_blank" class="contact-btn">
+      Open Contact & Demo Form
+    </a>
+    <p style="margin:18px 0 0;">
+      Or <a href="mailto:wolfnodehq@gmail.com" style="color:var(--primary-dark);text-decoration:underline;font-weight:600;">Contact us by email</a>
     </p>
   </section>
 </div>
-<footer style="text-align:center;color:#a3ffd7;background:transparent;margin-top:30px;">
+
+<footer>
   &copy; 2025 WhatsApp AI Chatbot. Made for the world 🌍 | Powered by AI.
 </footer>
+
 <script>
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
@@ -341,60 +481,52 @@ window.addEventListener('resize', () => {
   width = window.innerWidth; height = window.innerHeight;
   canvas.width = width; canvas.height = height;
 });
-const BILL_COLORS = [
-  "#4caf50", "#81c784", "#66bb6a", "#388e3c", "#2ecc71"
-];
-function randomInt(a, b) {
-  return Math.floor(Math.random() * (b - a + 1)) + a;
-}
+
+const BILL_COLORS = ["#4caf50", "#81c784", "#66bb6a", "#388e3c", "#2ecc71"];
+
 class MoneyBill {
   constructor() { this.reset(); }
   reset() {
-    this.w = randomInt(60, 110);
+    this.w = Math.random() * 50 + 60;
     this.h = this.w * 0.45;
-    this.x = randomInt(0, width - this.w);
-    this.y = randomInt(-height, -this.h);
+    this.x = Math.random() * (width - this.w);
+    this.y = Math.random() * -height;
     this.z = Math.random();
-    this.speed = 2.4 + 2.5 * this.z + Math.random();
+    this.speed = 1.5 + 2 * this.z;
     this.ang = Math.random() * Math.PI * 2;
-    this.angSpeed = 0.015 + Math.random() * 0.025;
-    this.color = BILL_COLORS[randomInt(0, BILL_COLORS.length - 1)];
-    this.opacity = 0.56 + 0.4 * this.z;
+    this.angSpeed = 0.01 + Math.random() * 0.02;
+    this.color = BILL_COLORS[Math.floor(Math.random() * BILL_COLORS.length)];
+    this.opacity = 0.4 + 0.4 * this.z;
   }
+  
   update() {
     this.y += this.speed;
     this.ang += this.angSpeed;
     if (this.y > height + this.h) this.reset();
   }
+  
   draw(ctx) {
     ctx.save();
     ctx.globalAlpha = this.opacity;
-    const scale = 0.7 + 0.5 * this.z + 0.25 * Math.sin(this.ang);
+    const scale = 0.7 + 0.5 * this.z + 0.1 * Math.sin(this.ang);
     ctx.translate(this.x + this.w/2, this.y + this.h/2);
-    ctx.rotate(Math.sin(this.ang)*0.6);
+    ctx.rotate(Math.sin(this.ang)*0.4);
     ctx.scale(scale, 1);
     ctx.fillStyle = this.color;
     ctx.strokeStyle = "#fff";
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.rect(-this.w/2, -this.h/2, this.w, this.h);
+    ctx.roundRect(-this.w/2, -this.h/2, this.w, this.h, [this.w/8]);
     ctx.fill();
     ctx.stroke();
-    ctx.save();
-    ctx.globalAlpha = 0.7;
-    ctx.fillStyle = "#fff";
-    ctx.font = `${Math.floor(this.h*0.7)}px Arial Black, Arial, sans-serif`;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText("💸", 0, 1);
     ctx.restore();
-    ctx.restore();
-    ctx.globalAlpha = 1;
   }
 }
-const MONEY_COUNT = Math.floor(window.innerWidth / 28) + 18;
+
+const MONEY_COUNT = Math.floor(window.innerWidth / 25);
 const bills = [];
 for(let i=0;i<MONEY_COUNT;i++) bills.push(new MoneyBill());
+
 function animate() {
   ctx.clearRect(0, 0, width, height);
   bills.forEach(bill => {
@@ -405,6 +537,7 @@ function animate() {
 }
 animate();
 </script>
+
 <script src="https://www.paypal.com/sdk/js?client-id=Ac31PirTDZ0M_ubUOJmJEtSgP8m3Z13aKmTXCKjnrkvfhYsB37STiOLWpMKdzv3F0V6jfM6314MzrICI&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
 <script>
   document.getElementById('show-paypal-starter').onclick = function() {
@@ -414,6 +547,7 @@ animate();
       document.getElementById('paypal-button-container-P-2LS65560M9674910ENBNML4I').scrollIntoView({behavior:"smooth"});
     }
   };
+  
   paypal.Buttons({
       style: {
           shape: 'rect',
@@ -430,6 +564,7 @@ animate();
         alert("Subscription successful! ID: " + data.subscriptionID);
       }
   }).render('#paypal-button-container-P-2LS65560M9674910ENBNML4I');
+  
   document.getElementById('show-paypal-business').onclick = function() {
     var modal = document.getElementById('paypal-business-modal');
     if (modal.style.display !== 'block') {
@@ -437,6 +572,7 @@ animate();
       document.getElementById('paypal-button-container-P-1Y881485VY5794813NBNMRNY').scrollIntoView({behavior:"smooth"});
     }
   };
+  
   paypal.Buttons({
       style: {
           shape: 'rect',
@@ -454,35 +590,36 @@ animate();
       }
   }).render('#paypal-button-container-P-1Y881485VY5794813NBNMRNY');
 </script>
+
 <!-- n8n Chatbot Widget: Customized to match your theme -->
 <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
 <style>
   :root {
-    --chat--color-primary: #16796f;
-    --chat--color-primary-shade-50: #179c8b;
-    --chat--color-primary-shade-100: #2dd07c;
-    --chat--color-secondary: #2dd07c;
-    --chat--color-secondary-shade-50: #26b96c;
-    --chat--color-white: #ffffff;
-    --chat--color-light: #f0f8f4;
-    --chat--color-light-shade-50: #eafff5;
-    --chat--color-light-shade-100: #c2c5cc;
-    --chat--color-medium: #b9e2d8;
-    --chat--color-dark: #11344d;
-    --chat--color-typing: #404040;
-    --chat--window--width: 390px;
-    --chat--window--height: 560px;
+    --chat--color-primary: #00A884;
+    --chat--color-primary-shade-50: #008069;
+    --chat--color-primary-shade-100: #00A884;
+    --chat--color-secondary: #00A884;
+    --chat--color-secondary-shade-50: #008069;
+    --chat--color-white: #FFFFFF;
+    --chat--color-light: #F5F7FA;
+    --chat--color-light-shade-50: #E2E8F0;
+    --chat--color-light-shade-100: #CBD5E0;
+    --chat--color-medium: #A0AEC0;
+    --chat--color-dark: #111B21;
+    --chat--color-typing: #4A5568;
+    --chat--window--width: 380px;
+    --chat--window--height: 540px;
     --chat--header-height: auto;
-    --chat--header--background: linear-gradient(90deg, #16796f 0%, #2dd07c 100%);
+    --chat--header--background: linear-gradient(135deg, #00A884 0%, #008069 100%);
     --chat--header--color: #fff;
     --chat--header--border-top: none;
     --chat--header--border-bottom: none;
     --chat--heading--font-size: 1.25em;
     --chat--subtitle--font-size: 1em;
-    --chat--border-radius: 14px;
-    --chat--toggle--background: #16796f;
-    --chat--toggle--hover--background: #2dd07c;
-    --chat--toggle--active--background: #179c8b;
+    --chat--border-radius: 12px;
+    --chat--toggle--background: #00A884;
+    --chat--toggle--hover--background: #008069;
+    --chat--toggle--active--background: #006653;
     --chat--toggle--color: #fff;
     --chat--toggle--size: 60px;
   }
