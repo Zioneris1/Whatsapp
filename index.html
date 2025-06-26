@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -1113,6 +1114,7 @@ function runChatAnimation(script) {
 }
 
 // --- Gemini API Integration ---
+const apiKey = "AIzaSyDgSbDFrQJC5LavVM89-B4hyWDk6ltu73o";
 const generateBtn = document.getElementById('gemini-generate-btn');
 const businessTypeInput = document.getElementById('businessType');
 const statusDiv = document.getElementById('gemini-status');
@@ -1175,7 +1177,6 @@ generateBtn.addEventListener('click', async () => {
                 }
             }
         };
-        const apiKey = ""; 
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
         const response = await fetch(apiUrl, {
@@ -1267,7 +1268,6 @@ faqGenerateBtn.addEventListener('click', async () => {
                 }
             }
         };
-        const apiKey = "";
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
         
         const response = await fetch(apiUrl, {
@@ -1357,7 +1357,6 @@ welcomeGenerateBtn.addEventListener('click', async () => {
                 }
             }
         };
-        const apiKey = "";
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
         
         const response = await fetch(apiUrl, {
@@ -1446,7 +1445,6 @@ useCaseBtn.addEventListener('click', async () => {
                 }
             }
         };
-        const apiKey = "";
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
         
         const response = await fetch(apiUrl, {
@@ -1544,7 +1542,7 @@ window.onload = () => {
         window.n8nChat = module.createChat({
           webhookUrl: 'https://n8n-service-0qtq.onrender.com/webhook/b78978f6-90c4-45df-8b01-fa56a1e5460e/chat',
           initialMessages: [
-            "Welcome to WhatsApp AI Chatbot! �",
+            "Welcome to WhatsApp AI Chatbot! 👋",
             "How can we help you today?"
           ],
           i18n: {
@@ -1564,4 +1562,3 @@ window.onload = () => {
 </script>
 </body>
 </html>
-�
