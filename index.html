@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -19,6 +18,7 @@
       --border: #E2E8F0;
       --success: #38A169;
       --warning: #F59E0B;
+      --error: #E53E3E;
       --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
       --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
       --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
@@ -126,6 +126,78 @@
       font-weight: 400;
     }
     
+    .gemini-demo-container {
+      margin-top: 30px;
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: var(--radius-md);
+    }
+
+    .gemini-demo-container label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: white;
+    }
+    
+    .gemini-demo-input {
+        width: 100%;
+        padding: 12px;
+        border-radius: var(--radius-sm);
+        border: 1px solid rgba(255,255,255,0.3);
+        background: rgba(0,0,0,0.2);
+        color: white;
+        font-size: 1rem;
+        box-sizing: border-box;
+        margin-bottom: 12px;
+    }
+
+    .gemini-demo-input::placeholder {
+        color: rgba(255,255,255,0.5);
+    }
+
+    .gemini-btn {
+      background: var(--warning);
+      color: var(--secondary);
+      width: 100%;
+      border: none;
+      padding: 14px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .gemini-btn:hover {
+        background: #ffb84d;
+    }
+     .gemini-btn:disabled {
+        background: var(--text-light);
+        color: #fff;
+        cursor: not-allowed;
+    }
+    
+    .gemini-status {
+        margin-top: 12px;
+        font-size: 0.9rem;
+        text-align: center;
+        height: 1.2em;
+        transition: color 0.3s ease;
+    }
+    
+    #gemini-status {
+       color: white;
+    }
+    
+     .gemini-status.error {
+        color: var(--error);
+     }
+     .gemini-status.success {
+        color: var(--success);
+     }
+
+
     .hero-visual {
         flex: 1;
         display: flex;
@@ -508,6 +580,91 @@
       padding: 60px 20px;
       background: white;
     }
+    
+    .gemini-generator-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .gemini-generator-container textarea,
+    .gemini-generator-container select {
+        width: 100%;
+        padding: 12px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        background: var(--background);
+        color: var(--text);
+        font-size: 1rem;
+        box-sizing: border-box;
+        margin-bottom: 12px;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    .gemini-generator-container textarea {
+        min-height: 80px;
+        resize: vertical;
+    }
+
+    .gemini-generator-container .gemini-status {
+        color: var(--text-light);
+    }
+
+    .results-container {
+        margin-top: 30px;
+        text-align: left;
+        border-top: 1px solid var(--border);
+        display: none; /* Hidden by default */
+    }
+
+    .result-item {
+        border-bottom: 1px solid var(--border);
+        padding: 20px 0;
+    }
+    
+    .result-item:first-child {
+        padding-top: 20px;
+    }
+    .result-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    
+    .result-item .item-title {
+        font-weight: 600;
+        color: var(--secondary);
+        margin: 0 0 8px 0;
+        font-size: 1.1rem;
+    }
+     .result-item .item-title .tone {
+        font-weight: 500;
+        font-style: italic;
+        color: var(--text-light);
+        font-size: 0.9rem;
+        margin-left: 8px;
+     }
+
+    .result-item .item-content {
+        color: var(--text-light);
+        padding-left: 20px;
+        border-left: 3px solid var(--primary-light);
+        margin: 0;
+    }
+    
+    .benefit-tag {
+        display: inline-block;
+        background: var(--primary-light);
+        color: var(--primary-dark);
+        padding: 2px 10px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin-left: 10px;
+    }
+
 
     footer {
       text-align: center;
@@ -562,7 +719,12 @@
             </div>
             <h1>The Future of Sales is Here. Automate it with AI.</h1>
             <p>Stop losing leads. Our AI-powered WhatsApp bot converts visitors into customers 24/7, creating a sales machine that never sleeps.</p>
-            <a href="#pricing" class="pay-btn">View Plans & Pricing</a>
+             <div class="gemini-demo-container">
+                <label for="businessType">See it work for you. What's your business?</label>
+                <input type="text" id="businessType" class="gemini-demo-input" placeholder="e.g., real estate, coffee shop...">
+                <button id="gemini-generate-btn" class="gemini-btn">✨ Generate a Live AI Demo</button>
+                <div id="gemini-status" class="gemini-status"></div>
+             </div>
           </div>
           <div class="hero-visual">
              <div class="phone-mockup">
@@ -734,6 +896,58 @@
         </div>
     </section>
       
+    <section id="faq-generator" class="content-section" style="background: var(--background);">
+      <div class="container">
+        <h2>Discover Your Bot's Potential</h2>
+        <p class="section-subtitle">Curious what your AI bot could handle? Describe your business, and our AI will instantly generate common customer questions it could answer for you.</p>
+        <div class="gemini-generator-container">
+            <textarea id="faqBusinessType" class="gemini-demo-input" rows="3" placeholder="e.g., We are a local bakery specializing in custom cakes and fresh bread. We are open from 8 AM to 6 PM."></textarea>
+            <button id="gemini-faq-btn" class="gemini-btn">✨ Generate Sample FAQs</button>
+            <div id="faq-status" class="gemini-status"></div>
+            <div id="faq-results" class="results-container">
+                <!-- Generated FAQs will appear here -->
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="welcome-message-generator" class="content-section">
+      <div class="container">
+        <h2>Craft the Perfect First Impression</h2>
+        <p class="section-subtitle">Your bot's first message is crucial. Describe your brand's personality, and let our AI generate welcome messages that match your style.</p>
+        <div class="gemini-generator-container">
+            <textarea id="brandVoice" class="gemini-demo-input" rows="3" placeholder="e.g., We're a fun, friendly cafe that loves puns and great coffee. We want to sound cheerful and welcoming."></textarea>
+            <button id="gemini-welcome-btn" class="gemini-btn">✨ Generate Welcome Messages</button>
+            <div id="welcome-status" class="gemini-status"></div>
+            <div id="welcome-results" class="results-container">
+                <!-- Generated Welcome Messages will appear here -->
+            </div>
+        </div>
+      </div>
+    </section>
+    
+    <section id="use-case-explorer" class="content-section" style="background: var(--background);">
+      <div class="container">
+        <h2>See Your Industry-Specific ROI</h2>
+        <p class="section-subtitle">Select your industry to see real-world examples of how an AI bot can save you time and boost your revenue.</p>
+        <div class="gemini-generator-container">
+            <select id="industry-select" class="gemini-demo-input">
+                <option value="" disabled selected>-- Select Your Industry --</option>
+                <option value="E-commerce">E-commerce</option>
+                <option value="Real Estate">Real Estate</option>
+                <option value="Restaurant / Cafe">Restaurant / Cafe</option>
+                <option value="Healthcare Clinic (e.g., Dentist, Physio)">Healthcare Clinic</option>
+                <option value="Professional Services (e.g., Consultant, Agency)">Professional Services</option>
+            </select>
+            <button id="gemini-use-case-btn" class="gemini-btn">✨ Explore Use Cases</button>
+            <div id="use-case-status" class="gemini-status"></div>
+            <div id="use-case-results" class="results-container">
+                <!-- Generated Use Cases will appear here -->
+            </div>
+        </div>
+      </div>
+    </section>
+
     <section id="contact" class="contact-section">
       <h2>Ready to Grow Your Business?</h2>
       <p class="section-subtitle">Let's get your AI chatbot set up. Contact us for a free demo or with any questions you may have.</p>
@@ -852,7 +1066,7 @@ function animate3D() {
 
 // --- AI Chat Animation ---
 const chatScreen = document.getElementById('chat-screen');
-const chatScript = [
+const defaultChatScript = [
     { from: 'user', text: "Hi, I'm interested in your services." },
     { from: 'bot', typing: true, delay: 1500 },
     { from: 'bot', text: "Hello! We can definitely help. What kind of business do you have?" },
@@ -861,12 +1075,17 @@ const chatScript = [
     { from: 'bot', text: "Perfect! Our bot can handle order tracking, FAQs, and even recover abandoned carts. Want to see a demo?" },
     { from: 'user', text: "Yes please!" }
 ];
+let chatAnimationTimeout; 
 
-function runChatAnimation() {
-    let delay = 1000;
-    chatScreen.innerHTML = ''; // Clear screen
+function runChatAnimation(script) {
+    if (chatAnimationTimeout) {
+        clearTimeout(chatAnimationTimeout);
+    }
+    
+    let delay = 500;
+    chatScreen.innerHTML = ''; 
 
-    chatScript.forEach(message => {
+    script.forEach(message => {
         setTimeout(() => {
             if (message.typing) {
                  const typingBubble = document.createElement('div');
@@ -875,7 +1094,6 @@ function runChatAnimation() {
                  chatScreen.appendChild(typingBubble);
                  chatScreen.scrollTop = chatScreen.scrollHeight;
             } else {
-                // Remove typing indicator if it exists
                 const typingBubble = chatScreen.querySelector('.typing');
                 if(typingBubble) {
                     typingBubble.remove();
@@ -891,15 +1109,396 @@ function runChatAnimation() {
         delay += message.delay || 1200;
     });
     
-    // Loop the animation
-    setTimeout(runChatAnimation, delay + 2000);
+    chatAnimationTimeout = setTimeout(() => runChatAnimation(script), delay + 3000);
 }
+
+// --- Gemini API Integration ---
+const generateBtn = document.getElementById('gemini-generate-btn');
+const businessTypeInput = document.getElementById('businessType');
+const statusDiv = document.getElementById('gemini-status');
+const faqGenerateBtn = document.getElementById('gemini-faq-btn');
+const faqBusinessTypeInput = document.getElementById('faqBusinessType');
+const faqStatusDiv = document.getElementById('faq-status');
+const faqResultsDiv = document.getElementById('faq-results');
+const welcomeGenerateBtn = document.getElementById('gemini-welcome-btn');
+const brandVoiceInput = document.getElementById('brandVoice');
+const welcomeStatusDiv = document.getElementById('welcome-status');
+const welcomeResultsDiv = document.getElementById('welcome-results');
+const useCaseBtn = document.getElementById('gemini-use-case-btn');
+const industrySelect = document.getElementById('industry-select');
+const useCaseStatusDiv = document.getElementById('use-case-status');
+const useCaseResultsDiv = document.getElementById('use-case-results');
+
+
+function setStatus(element, message, isError = false, isSuccess = false) {
+    element.textContent = message;
+    element.classList.remove('error', 'success');
+    if (isError) element.classList.add('error');
+    if (isSuccess) element.classList.add('success');
+}
+
+
+generateBtn.addEventListener('click', async () => {
+    const businessType = businessTypeInput.value.trim();
+    if (!businessType) {
+        setStatus(statusDiv, "Please enter a business type.", true);
+        return;
+    }
+
+    generateBtn.disabled = true;
+    setStatus(statusDiv, "Generating AI Chat...");
+    
+    const prompt = `You are a scriptwriter for a WhatsApp AI chatbot demo. A potential customer who runs a "${businessType}" business is visiting the website. Create a short, realistic, and impressive WhatsApp chat conversation script. The script MUST be between 4 and 6 messages long. It MUST start with a message from the 'user'. It should showcase the bot's ability to be helpful, qualify a lead, or schedule a meeting. Respond ONLY with the JSON object.`;
+
+    try {
+        let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+        const payload = {
+            contents: chatHistory,
+            generationConfig: {
+                responseMimeType: "application/json",
+                responseSchema: {
+                    type: "OBJECT",
+                    properties: {
+                        "script": {
+                            "type": "ARRAY",
+                            "items": {
+                                "type": "OBJECT",
+                                "properties": {
+                                    "from": { "type": "STRING", "enum": ["user", "bot"]},
+                                    "text": { "type": "STRING" }
+                                },
+                                "required": ["from", "text"]
+                            }
+                        }
+                    },
+                     "required": ["script"]
+                }
+            }
+        };
+        const apiKey = ""; 
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+        
+        if (!response.ok) {
+             console.error("API Error Response:", result);
+             throw new Error(`API call failed: ${result?.error?.message || response.status}`);
+        }
+        
+        if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts[0]) {
+            let generatedScript;
+            try {
+                const jsonText = result.candidates[0].content.parts[0].text;
+                generatedScript = JSON.parse(jsonText).script;
+            } catch(e) {
+                console.error("JSON Parsing Error:", e);
+                throw new Error("Could not parse the AI's response.");
+            }
+            
+            const finalScript = [];
+            for (const msg of generatedScript) {
+                if (msg.from === 'bot') {
+                    finalScript.push({ from: 'bot', typing: true, delay: 1500 });
+                }
+                finalScript.push({from: msg.from, text: msg.text, delay: 1200});
+            }
+            
+            runChatAnimation(finalScript);
+            setStatus(statusDiv, "Demo generated successfully!", false, true);
+        } else {
+            console.error("Invalid response structure from API:", result);
+            throw new Error("Received an invalid response from the AI.");
+        }
+    } catch (error) {
+        console.error("Error in generateBtn click handler:", error);
+        setStatus(statusDiv, error.message, true);
+        runChatAnimation(defaultChatScript);
+    } finally {
+        generateBtn.disabled = false;
+    }
+});
+
+
+faqGenerateBtn.addEventListener('click', async () => {
+    const businessDesc = faqBusinessTypeInput.value.trim();
+    if (!businessDesc) {
+        setStatus(faqStatusDiv, "Please describe your business.", true);
+        return;
+    }
+
+    faqGenerateBtn.disabled = true;
+    faqGenerateBtn.textContent = 'Thinking...';
+    setStatus(faqStatusDiv, "Generating FAQs with AI...");
+    faqResultsDiv.style.display = 'none';
+    faqResultsDiv.innerHTML = '';
+
+    const prompt = `Based on the following business description, generate 5 common customer questions and concise, helpful answers that a WhatsApp AI chatbot could provide.
+    Business Description: "${businessDesc}"
+    Provide the output as a JSON object.`;
+
+    try {
+        let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+        const payload = {
+            contents: chatHistory,
+            generationConfig: {
+                responseMimeType: "application/json",
+                responseSchema: {
+                    type: "OBJECT",
+                    properties: {
+                        "faqs": {
+                            "type": "ARRAY",
+                            "items": {
+                                "type": "OBJECT",
+                                "properties": {
+                                    "question": { "type": "STRING" },
+                                    "answer": { "type": "STRING" }
+                                },
+                                "required": ["question", "answer"]
+                            }
+                        }
+                    },
+                    "required": ["faqs"]
+                }
+            }
+        };
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+        
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            console.error("FAQ API Error:", result);
+            throw new Error("The AI failed to generate FAQs. Please try again.");
+        }
+
+        if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts[0]) {
+             const jsonText = result.candidates[0].content.parts[0].text;
+             const generatedFaqs = JSON.parse(jsonText).faqs;
+             
+             if(generatedFaqs && generatedFaqs.length > 0) {
+                 generatedFaqs.forEach(faq => {
+                     const item = document.createElement('div');
+                     item.className = 'result-item';
+                     item.innerHTML = `
+                        <h4 class="item-title">${faq.question}</h4>
+                        <p class="item-content">${faq.answer}</p>
+                     `;
+                     faqResultsDiv.appendChild(item);
+                 });
+                 faqResultsDiv.style.display = 'block';
+                 setStatus(faqStatusDiv, "Here are some sample FAQs your bot could handle!", false, true);
+             } else {
+                 throw new Error("The AI returned empty results.");
+             }
+        } else {
+             throw new Error("Received an invalid response structure from the AI.");
+        }
+
+    } catch (error) {
+        console.error("Error generating FAQs:", error);
+        setStatus(faqStatusDiv, error.message, true);
+    } finally {
+        faqGenerateBtn.disabled = false;
+        faqGenerateBtn.textContent = '✨ Generate Sample FAQs';
+    }
+});
+
+welcomeGenerateBtn.addEventListener('click', async () => {
+    const brandVoice = brandVoiceInput.value.trim();
+    if (!brandVoice) {
+        setStatus(welcomeStatusDiv, "Please describe your brand voice.", true);
+        return;
+    }
+
+    welcomeGenerateBtn.disabled = true;
+    welcomeGenerateBtn.textContent = 'Crafting...';
+    setStatus(welcomeStatusDiv, "Generating welcome messages with AI...");
+    welcomeResultsDiv.style.display = 'none';
+    welcomeResultsDiv.innerHTML = '';
+
+    const prompt = `Based on the following brand voice description, generate 3 distinct welcome messages for a WhatsApp chatbot. Each message should have a different tone (e.g., professional, friendly, playful).
+    Brand Voice Description: "${brandVoice}"
+    Provide the output as a JSON object.`;
+
+    try {
+        let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+        const payload = {
+            contents: chatHistory,
+            generationConfig: {
+                responseMimeType: "application/json",
+                responseSchema: {
+                    type: "OBJECT",
+                    properties: {
+                        "messages": {
+                            "type": "ARRAY",
+                            "items": {
+                                "type": "OBJECT",
+                                "properties": {
+                                    "tone": { "type": "STRING" },
+                                    "message": { "type": "STRING" }
+                                },
+                                "required": ["tone", "message"]
+                            }
+                        }
+                    },
+                    "required": ["messages"]
+                }
+            }
+        };
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+        
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            console.error("Welcome Message API Error:", result);
+            throw new Error("The AI failed to generate messages. Please try again.");
+        }
+
+        if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts[0]) {
+             const jsonText = result.candidates[0].content.parts[0].text;
+             const generatedMessages = JSON.parse(jsonText).messages;
+             
+             if(generatedMessages && generatedMessages.length > 0) {
+                 generatedMessages.forEach(msg => {
+                     const item = document.createElement('div');
+                     item.className = 'result-item';
+                     item.innerHTML = `
+                        <h4 class="item-title">Message Idea <span class="tone">(${msg.tone})</span></h4>
+                        <p class="item-content">${msg.message}</p>
+                     `;
+                     welcomeResultsDiv.appendChild(item);
+                 });
+                 welcomeResultsDiv.style.display = 'block';
+                 setStatus(welcomeStatusDiv, "Here are some personalized welcome messages!", false, true);
+             } else {
+                 throw new Error("The AI returned empty results.");
+             }
+        } else {
+             throw new Error("Received an invalid response structure from the AI.");
+        }
+
+    } catch (error) {
+        console.error("Error generating welcome messages:", error);
+        setStatus(welcomeStatusDiv, error.message, true);
+    } finally {
+        welcomeGenerateBtn.disabled = false;
+        welcomeGenerateBtn.textContent = '✨ Generate Welcome Messages';
+    }
+});
+
+useCaseBtn.addEventListener('click', async () => {
+    const industry = industrySelect.value;
+    if (!industry) {
+        setStatus(useCaseStatusDiv, "Please select an industry.", true);
+        return;
+    }
+
+    useCaseBtn.disabled = true;
+    useCaseBtn.textContent = 'Exploring...';
+    setStatus(useCaseStatusDiv, `Generating use cases for ${industry}...`);
+    useCaseResultsDiv.style.display = 'none';
+    useCaseResultsDiv.innerHTML = '';
+
+    const prompt = `For the "${industry}" industry, generate 4 specific, high-value use cases for a WhatsApp AI chatbot. For each use case, provide a title, a description of how it works, and a key benefit (e.g., 'Saves Time', 'Increases Sales', 'Improves Service'). Provide the output as a JSON object.`;
+
+    try {
+        let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+        const payload = {
+            contents: chatHistory,
+            generationConfig: {
+                responseMimeType: "application/json",
+                responseSchema: {
+                    type: "OBJECT",
+                    properties: {
+                        "use_cases": {
+                            "type": "ARRAY",
+                            "items": {
+                                "type": "OBJECT",
+                                "properties": {
+                                    "title": { "type": "STRING" },
+                                    "description": { "type": "STRING" },
+                                    "benefit": { "type": "STRING" }
+                                },
+                                "required": ["title", "description", "benefit"]
+                            }
+                        }
+                    },
+                    "required": ["use_cases"]
+                }
+            }
+        };
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+        
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            console.error("Use Case API Error:", result);
+            throw new Error("The AI failed to generate use cases. Please try again.");
+        }
+
+        if (result.candidates && result.candidates[0].content && result.candidates[0].content.parts[0]) {
+             const jsonText = result.candidates[0].content.parts[0].text;
+             const generatedUseCases = JSON.parse(jsonText).use_cases;
+             
+             if(generatedUseCases && generatedUseCases.length > 0) {
+                 generatedUseCases.forEach(uc => {
+                     const item = document.createElement('div');
+                     item.className = 'result-item';
+                     item.innerHTML = `
+                        <h4 class="item-title">${uc.title} <span class="benefit-tag">${uc.benefit}</span></h4>
+                        <p class="item-content">${uc.description}</p>
+                     `;
+                     useCaseResultsDiv.appendChild(item);
+                 });
+                 useCaseResultsDiv.style.display = 'block';
+                 setStatus(useCaseStatusDiv, `Successfully generated use cases for ${industry}!`, false, true);
+             } else {
+                 throw new Error("The AI returned empty results for use cases.");
+             }
+        } else {
+             throw new Error("Received an invalid use case response from the AI.");
+        }
+
+    } catch (error) {
+        console.error("Error generating use cases:", error);
+        setStatus(useCaseStatusDiv, error.message, true);
+    } finally {
+        useCaseBtn.disabled = false;
+        useCaseBtn.textContent = '✨ Explore Use Cases';
+    }
+});
 
 
 // --- Initializations ---
 window.onload = () => {
     init3D();
-    runChatAnimation();
+    runChatAnimation(defaultChatScript);
 }
 </script>
 
@@ -945,7 +1544,7 @@ window.onload = () => {
         window.n8nChat = module.createChat({
           webhookUrl: 'https://n8n-service-0qtq.onrender.com/webhook/b78978f6-90c4-45df-8b01-fa56a1e5460e/chat',
           initialMessages: [
-            "Welcome to WhatsApp AI Chatbot! 👋",
+            "Welcome to WhatsApp AI Chatbot! �",
             "How can we help you today?"
           ],
           i18n: {
@@ -965,3 +1564,4 @@ window.onload = () => {
 </script>
 </body>
 </html>
+�
